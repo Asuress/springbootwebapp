@@ -1,8 +1,48 @@
 <!DOCTYPE html>
-<html>
+
+<html th:replace="~{basic/page::basic_page(~{::head}, ~{::body}, ~{::footer})}">
+
+<head th:replace="~{basic/header::basic_header(~{::title}, _)}">
+    <title>Some Title</title>
+</head>
 
 <body>
-    <h1>Index page</h1>
+    <h1 th:text="|Index page of ${username}|">Index page of user</h1>
+    <div>
+        <form method="post" action="login">
+            <input type="text" name="username" placeholder="Имя пользователя">
+            <input type="password" name="password" placeholder="Пароль">
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+
+    <div>
+        <form method="post" action="message">
+            <input type="text" name="text" placeholder="Message text">
+            <input type="text" name="tag" placeholder="Tag">
+            <input type="text" name="username" placeholder="Username">
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+
+    <div>
+        <table>
+            <tr>
+              <th>Text</th>
+              <th>Tag</th>
+              <th>Username</th>
+            </tr>
+            <tr th:each="message : ${messages}">
+              <td th:text="${message.text}">Onions</td>
+              <td th:text="${message.tag}">2.41</td>
+              <td th:text="${message.username}">yes</td>
+            </tr>
+          </table>
+    </div>
 </body>
+
+<footer th:replace="~{basic/footer::basic_footer(~{::#copyright})}">
+    <div id="copyright">&copy; Unique copyright</div>
+</footer>
 
 </html>
