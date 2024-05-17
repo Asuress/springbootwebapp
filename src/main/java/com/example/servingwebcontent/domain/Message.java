@@ -1,9 +1,12 @@
 package com.example.servingwebcontent.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Message {
@@ -13,23 +16,38 @@ public class Message {
 
 	private String text;
 	private String tag;
-	private String username;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
+	private User author;
+	
 	public Message() {
 	}
 
-	public Message(String text, String tag, String username) {
+	public Message(String text, String tag, User user) {
+		this.author = user;
 		this.text = text;
 		this.tag = tag;
-		this.username = username;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getAuthorName(){
+		return author != null ? author.getUsername() : "<none>";
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public User getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getText() {
+		return text;
 	}
 
 	public Integer getId() {
@@ -38,14 +56,6 @@ public class Message {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 
 	public String getTag() {
