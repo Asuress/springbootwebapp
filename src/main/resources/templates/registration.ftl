@@ -1,5 +1,5 @@
 <#import "basic/page.ftl" as page>
-<#import "basic/login.ftl" as login>
+<#import "basic/common.ftl" as common>
 
 <@page.page>
 <h1>Registration page</h1>
@@ -11,5 +11,5 @@ ${message}
 </#if>
 </h4>
 
-<@login.login "/registration" />
+<@common.login "/registration" />
 </@page.page>
