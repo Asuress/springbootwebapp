@@ -1,0 +1,21 @@
+version: '1'
+services:
+  postgres:
+    image: 'postgres'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: 'spring_pg'
+    ports:
+      - 5432:5432
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=1'
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'
+      - 'POSTGRES_DB=springapp'
+  springapp:
+    image: 'springboot'
+    container_name: 'spring_app'
+    ports:
+      - 8880:8080
+    depends_on:
+      - postgres

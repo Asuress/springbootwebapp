@@ -2,6 +2,7 @@ package com.example.servingwebcontent.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -22,6 +23,7 @@ public class RegistrationController {
 		return "registration";
 	}
 
+	@Transactional
 	@PostMapping("/registration")
 	public String addUser(User user, Map<String, Object> model) {
 		User userFromDb = userRepo.findByUsername(user.getUsername());

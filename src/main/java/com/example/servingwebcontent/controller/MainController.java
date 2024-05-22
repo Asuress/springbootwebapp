@@ -19,23 +19,16 @@ public class MainController {
 	@Autowired
 	private MessageRepo messageRepo;
 
-	@GetMapping("/")
+	@GetMapping(value = { "/", "/index" })
 	public String index(Map<String, Object> model) {
 		return "index";
 	}
 
 	@GetMapping("/greeting")
-	public String greeting(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+	public String greeting(Model model) {
 		Iterable<Message> messages = messageRepo.findAll();
 
-		if (filter != null && !filter.isEmpty()) {
-			messages = messageRepo.findByTag(filter);
-		} else {
-			messages = messageRepo.findAll();
-		}
-
 		model.addAttribute("messages", messages);
-		model.addAttribute("filter", filter);
 
 		return "greeting";
 	}
@@ -44,7 +37,8 @@ public class MainController {
 	public String add(
 			@AuthenticationPrincipal User user,
 			@RequestParam String text,
-			@RequestParam String tag, Map<String, Object> model) {
+			@RequestParam String tag,
+			Map<String, Object> model) {
 		Message message = new Message(text, tag, user);
 
 		messageRepo.save(message);

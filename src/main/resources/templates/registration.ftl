@@ -2,8 +2,6 @@
 <#import "basic/common.ftl" as common>
 
 <@page.page>
-<h1>Registration page</h1>
-
 <h4>
 <#if message??>
 ${message}
